@@ -1,0 +1,266 @@
+
+<style>
+  :root { --accent: #1D9E75; --accent-light: #E1F5EE; --accent-dark: #085041; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .roadmap { padding: 1.5rem 0; }
+  .header { margin-bottom: 2rem; }
+  .header h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .header p { font-size: 14px; color: var(--color-text-secondary); }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+  .pill-green { background: #E1F5EE; color: #085041; }
+  .pill-blue { background: #E6F1FB; color: #0C447C; }
+  .pill-amber { background: #FAEEDA; color: #633806; }
+  .nav { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .nav-btn { font-size: 13px; padding: 6px 16px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; transition: all 0.15s; }
+  .nav-btn:hover { background: var(--color-background-secondary); }
+  .nav-btn.active { background: #E1F5EE; color: #085041; border-color: #5DCAA5; font-weight: 500; }
+  .week-panel { display: none; }
+  .week-panel.visible { display: block; }
+  .milestone { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.5rem; border-left: 3px solid #1D9E75; }
+  .milestone h2 { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .milestone p { font-size: 13px; color: var(--color-text-secondary); }
+  .section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-tertiary); margin: 1.5rem 0 0.75rem; }
+  .day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .day-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; cursor: pointer; transition: border-color 0.15s; }
+  .day-card:hover { border-color: var(--color-border-secondary); }
+  .day-card.done { border-left: 3px solid #1D9E75; }
+  .day-num { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 4px; }
+  .day-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+  .day-task { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .day-tag { display: inline-block; font-size: 11px; margin-top: 8px; padding: 2px 8px; border-radius: 10px; }
+  .tag-video { background: #E6F1FB; color: #0C447C; }
+  .tag-project { background: #FAEEDA; color: #633806; }
+  .tag-practice { background: #E1F5EE; color: #085041; }
+  .resources { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .res-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; }
+  .res-icon { font-size: 18px; margin-bottom: 6px; }
+  .res-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+  .res-desc { font-size: 12px; color: var(--color-text-secondary); }
+  .project-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .project-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .project-week { font-size: 11px; padding: 2px 10px; border-radius: 10px; background: #FAEEDA; color: #633806; }
+  .project-desc { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+  .outcome { background: #E1F5EE; border: 0.5px solid #5DCAA5; border-radius: var(--border-radius-lg); padding: 1.25rem; margin-top: 1.5rem; }
+  .outcome h2 { font-size: 15px; font-weight: 500; color: #085041; margin-bottom: 8px; }
+  .outcome-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 10px; }
+  .outcome-item { background: white; border-radius: var(--border-radius-md); padding: 0.6rem 0.8rem; font-size: 12px; color: #0F6E56; font-weight: 500; text-align: center; }
+  .progress-bar { height: 4px; background: var(--color-background-secondary); border-radius: 2px; margin-bottom: 1.5rem; }
+  .progress-fill { height: 100%; border-radius: 2px; background: #1D9E75; transition: width 0.3s; }
+  .toggle-tip { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+</style>
+
+<div class="roadmap">
+  <h2 class="sr-only">30-day generative AI learning roadmap for a Python/SQL professional</h2>
+
+  <div class="header">
+    <h1>Your 30-day Generative AI roadmap</h1>
+    <p>Tailored for a Python + SQL professional — 2 hours/day, video-first with hands-on projects</p>
+    <div class="pills">
+      <span class="pill pill-green"><i class="ti ti-brand-python" aria-hidden="true"></i> Python ✓</span>
+      <span class="pill pill-green"><i class="ti ti-database" aria-hidden="true"></i> SQL ✓</span>
+      <span class="pill pill-blue">Beginner → GenAI practitioner</span>
+      <span class="pill pill-amber">2 hrs/day · 30 days</span>
+    </div>
+  </div>
+
+  <div class="nav" id="nav">
+    <button class="nav-btn active" onclick="showTab('w1')">Week 1</button>
+    <button class="nav-btn" onclick="showTab('w2')">Week 2</button>
+    <button class="nav-btn" onclick="showTab('w3')">Week 3</button>
+    <button class="nav-btn" onclick="showTab('w4')">Week 4</button>
+    <button class="nav-btn" onclick="showTab('resources')">Resources</button>
+    <button class="nav-btn" onclick="showTab('projects')">Projects</button>
+    <button class="nav-btn" onclick="showTab('outcome')">Final outcome</button>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:25%"></div></div>
+
+  <div class="week-panel visible" id="w1">
+    <div class="milestone">
+      <h2>Week 1 milestone — AI & LLM fundamentals</h2>
+      <p>Understand how large language models work, set up your Python environment, and make your first API call. You'll use your existing Python skills to hit the ground running.</p>
+    </div>
+    <p class="toggle-tip">Click any day card to mark it complete.</p>
+    <p class="section-label">Daily tasks</p>
+    <div class="day-grid" id="grid-w1"></div>
+  </div>
+
+  <div class="week-panel" id="w2">
+    <div class="milestone">
+      <h2>Week 2 milestone — Prompt engineering & APIs</h2>
+      <p>Master prompt design patterns, chain-of-thought reasoning, and connect LLMs to external data — all leveraging your SQL background to build real data pipelines.</p>
+    </div>
+    <p class="section-label">Daily tasks</p>
+    <div class="day-grid" id="grid-w2"></div>
+  </div>
+
+  <div class="week-panel" id="w3">
+    <div class="milestone">
+      <h2>Week 3 milestone — RAG & embeddings</h2>
+      <p>Build retrieval-augmented generation (RAG) systems. Your SQL experience directly applies here — vector databases are tables with superpowers.</p>
+    </div>
+    <p class="section-label">Daily tasks</p>
+    <div class="day-grid" id="grid-w3"></div>
+  </div>
+
+  <div class="week-panel" id="w4">
+    <div class="milestone">
+      <h2>Week 4 milestone — Build & ship a real GenAI app</h2>
+      <p>Combine everything into a production-ready project. Deploy it, document it, and add it to your portfolio. You'll leave with a real GenAI app you built yourself.</p>
+    </div>
+    <p class="section-label">Daily tasks</p>
+    <div class="day-grid" id="grid-w4"></div>
+  </div>
+
+  <div class="week-panel" id="resources">
+    <p class="section-label">Free & paid learning resources</p>
+    <div class="resources" id="res-grid"></div>
+  </div>
+
+  <div class="week-panel" id="projects">
+    <p class="section-label">Hands-on projects — one per week</p>
+    <div id="proj-list"></div>
+  </div>
+
+  <div class="week-panel" id="outcome">
+    <div class="milestone">
+      <h2>After 30 days you will have...</h2>
+      <p>A portfolio, real skills, and the confidence to keep going deeper into Generative AI.</p>
+    </div>
+    <div class="outcome">
+      <h2>Skills unlocked</h2>
+      <div class="outcome-grid" id="skills-grid"></div>
+    </div>
+    <div class="outcome" style="margin-top:1rem; background:#E6F1FB; border-color:#85B7EB;">
+      <h2 style="color:#0C447C;">Portfolio projects shipped</h2>
+      <div class="outcome-grid" id="portfolio-grid"></div>
+    </div>
+    <div style="margin-top:1rem; background:var(--color-background-secondary); border-radius:var(--border-radius-lg); padding:1rem 1.25rem;">
+      <p style="font-size:13px; color:var(--color-text-secondary); margin-bottom:8px;">What to do on Day 31 →</p>
+      <button class="nav-btn" style="font-size:13px;" onclick="sendPrompt('I finished the 30-day GenAI roadmap. What should I learn next to advance my career?')">Ask Claude what to learn next ↗</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const weeks = {
+  w1: [
+    { day:1, title:"What is Generative AI?", task:"Watch Andrej Karpathy's 'Intro to LLMs' (1h). Write 5 key takeaways in a notebook.", tag:"video" },
+    { day:2, title:"How transformers work", task:"Watch 3Blue1Brown's 'Attention' video. Sketch the architecture on paper — no code yet.", tag:"video" },
+    { day:3, title:"Set up your Python env", task:"Install: openai, anthropic, python-dotenv. Create a .env file with your API key. Run Hello World.", tag:"practice" },
+    { day:4, title:"First API call", task:"Write a Python script that calls GPT-4o or Claude and prints a response. Tweak temperature and max_tokens.", tag:"practice" },
+    { day:5, title:"Tokens & context windows", task:"Watch a tokens explainer (30 min). Then count tokens in your own SQL queries using tiktoken.", tag:"video" },
+    { day:6, title:"Explore the OpenAI Cookbook", task:"Browse 3 examples from the OpenAI Cookbook GitHub. Adapt one to work with your own sample data.", tag:"project" },
+    { day:7, title:"Week 1 mini-project", task:"Build a CLI chatbot in Python that answers questions about a SQL table you define. ~50 lines of code.", tag:"project" },
+  ],
+  w2: [
+    { day:8, title:"Prompt engineering basics", task:"Watch DeepLearning.AI 'ChatGPT Prompt Engineering for Developers' — Lesson 1 & 2.", tag:"video" },
+    { day:9, title:"Zero-shot vs few-shot", task:"Write 10 prompt variations for a data task. Measure which produces the best SQL query output.", tag:"practice" },
+    { day:10, title:"Chain-of-thought prompting", task:"Watch lesson 3 of DeepLearning.AI course. Apply CoT to get LLMs to explain SQL query logic step by step.", tag:"video" },
+    { day:11, title:"System prompts & roles", task:"Build a Python script with a custom system prompt that turns the LLM into a 'SQL expert assistant'.", tag:"practice" },
+    { day:12, title:"Structured outputs", task:"Learn JSON mode / function calling. Get the LLM to return clean JSON you can load into a Pandas DataFrame.", tag:"practice" },
+    { day:13, title:"LangChain intro", task:"Watch LangChain crash course (45 min). Build a simple chain that takes a user question and generates a SQL query.", tag:"video" },
+    { day:14, title:"Week 2 mini-project", task:"Build a 'natural language to SQL' tool: user types a question in English, your script returns a runnable SQL query.", tag:"project" },
+  ],
+  w3: [
+    { day:15, title:"What is RAG?", task:"Watch IBM's RAG explainer video (20 min). Then read the original RAG paper abstract — no need for the full math.", tag:"video" },
+    { day:16, title:"Embeddings explained", task:"Watch OpenAI's embeddings intro. Compute embeddings for 20 sentences and visualize similarity scores.", tag:"video" },
+    { day:17, title:"Vector databases", task:"Set up ChromaDB (local, free). Store 100 text chunks and query them by similarity — think of it as a semantic SQL WHERE clause.", tag:"practice" },
+    { day:18, title:"Build your first RAG pipeline", task:"Ingest a PDF (e.g. a product manual), chunk it, embed it, store in Chroma. Query it with natural language.", tag:"project" },
+    { day:19, title:"RAG evaluation", task:"Learn RAGAS metrics. Run 10 Q&A pairs through your pipeline and score precision and recall.", tag:"practice" },
+    { day:20, title:"Advanced RAG patterns", task:"Watch 'Advanced RAG' on YouTube. Implement hybrid search (keyword + semantic) on your Week 3 project.", tag:"video" },
+    { day:21, title:"Week 3 mini-project", task:"Build a 'chat with your database' app: natural language → SQL → answer, with RAG fallback for unstructured data.", tag:"project" },
+  ],
+  w4: [
+    { day:22, title:"Agents & tool use", task:"Watch LangChain Agents tutorial. Build an agent that can query a database OR search the web depending on the question.", tag:"video" },
+    { day:23, title:"LLM evals & testing", task:"Set up a simple eval harness with 20 test cases. Log pass/fail rates. This is a professional skill most beginners skip.", tag:"practice" },
+    { day:24, title:"Streamlit UI", task:"Wrap your RAG app in a Streamlit interface. Users should be able to upload a file and ask questions about it.", tag:"project" },
+    { day:25, title:"Prompt versioning", task:"Learn Langfuse or PromptLayer for tracking prompt changes. Version your best prompts from the past 3 weeks.", tag:"practice" },
+    { day:26, title:"Cost & latency optimization", task:"Profile your app: measure cost per query, latency. Try GPT-4o-mini vs GPT-4o. Document the tradeoffs.", tag:"practice" },
+    { day:27, title:"Deploy to Hugging Face Spaces", task:"Deploy your Streamlit app to HuggingFace Spaces (free). Share the link — it's your first live GenAI project.", tag:"project" },
+    { day:28, title:"Security & responsible AI", task:"Watch Anthropic's 'Responsible Scaling Policy' explainer. Add basic input/output guardrails to your app.", tag:"video" },
+    { day:29, title:"Polish & document", task:"Write a README for your GitHub repo. Record a 2-minute Loom demo of your app. Add to your LinkedIn profile.", tag:"project" },
+    { day:30, title:"Reflect & plan", task:"Review what you built. Write a 1-page 'what I learned' doc. Identify 3 topics to go deeper on next month.", tag:"practice" },
+  ]
+};
+
+const resources = [
+  { icon:"ti ti-video", title:"DeepLearning.AI short courses", desc:"Best free GenAI video courses. Start with 'ChatGPT Prompt Engineering'.", type:"Free" },
+  { icon:"ti ti-brand-youtube", title:"Andrej Karpathy — YouTube", desc:"Deep technical intuition, explained visually. Watch 'Let's build GPT'.", type:"Free" },
+  { icon:"ti ti-notebook", title:"OpenAI Cookbook", desc:"Practical Python examples for real use cases. Your best reference repo.", type:"Free" },
+  { icon:"ti ti-school", title:"fast.ai Practical Deep Learning", desc:"Code-first, project-first. Perfect for your hands-on learning style.", type:"Free" },
+  { icon:"ti ti-brand-python", title:"LangChain docs + tutorials", desc:"Start with the quickstart, then the RAG tutorial. Very well written.", type:"Free" },
+  { icon:"ti ti-database", title:"ChromaDB + FAISS", desc:"Local vector DBs — no signup needed. Great for Week 3 projects.", type:"Free" },
+  { icon:"ti ti-chart-line", title:"Hugging Face courses", desc:"NLP course is excellent. Free certificates included.", type:"Free" },
+  { icon:"ti ti-book", title:"'Hands-On LLMs' (book)", desc:"Best practical book for engineers with Python background. Available on O'Reilly.", type:"Paid" },
+];
+
+const projects = [
+  { week:"Week 1", name:"Python CLI Chatbot", desc:"A command-line chatbot that answers questions about a CSV/SQL table you define. Uses the OpenAI or Anthropic API directly. No frameworks — pure Python. Teaches you the basics of prompt → response loops." },
+  { week:"Week 2", name:"Natural Language → SQL converter", desc:"Type a question in English ('Show me the top 10 customers by revenue this month') and get back a runnable SQL query. Uses your existing SQL expertise to validate outputs. Great resume project." },
+  { week:"Week 3", name:"Chat with your database (RAG)", desc:"Upload any PDF or document, chunk and embed it into ChromaDB, then ask questions. Falls back to SQL for structured data. Combines your Python + SQL skills with cutting-edge GenAI techniques." },
+  { week:"Week 4", name:"Deployed GenAI App (Portfolio piece)", desc:"Polish your Week 3 project, wrap it in a Streamlit UI, add evals, version your prompts, and deploy to Hugging Face Spaces. You'll have a live URL to share with recruiters and your team." },
+];
+
+const skills = ["LLM API integration","Prompt engineering","RAG pipelines","Vector databases","LangChain","Streamlit UIs","LLM evaluation","Responsible AI","Agent patterns","Cost optimization","Hugging Face","Structured outputs"];
+const portfolio = ["CLI Chatbot","NL→SQL tool","RAG document chat","Live deployed app"];
+
+function renderDays(weekId, days) {
+  const grid = document.getElementById('grid-' + weekId);
+  const saved = JSON.parse(localStorage.getItem('roadmap_done') || '{}');
+  grid.innerHTML = '';
+  days.forEach(d => {
+    const done = saved[d.day];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done ? ' done' : '');
+    card.innerHTML = `<div class="day-num">Day ${d.day}</div><div class="day-title">${d.title}</div><div class="day-task">${d.task}</div><span class="day-tag tag-${d.tag}">${d.tag === 'video' ? '▶ Video' : d.tag === 'project' ? '⚒ Project' : '✍ Practice'}</span>`;
+    card.onclick = () => {
+      try {
+        const s = JSON.parse(localStorage.getItem('roadmap_done') || '{}');
+        s[d.day] = !s[d.day];
+        localStorage.setItem('roadmap_done', JSON.stringify(s));
+      } catch(e) {}
+      renderDays(weekId, days);
+    };
+    grid.appendChild(card);
+  });
+}
+
+function renderResources() {
+  const g = document.getElementById('res-grid');
+  g.innerHTML = resources.map(r => `<div class="res-card"><i class="${r.icon} res-icon" aria-hidden="true" style="font-size:20px;color:var(--color-text-secondary)"></i><div class="res-title">${r.title}</div><div class="res-desc">${r.desc}</div><span class="day-tag tag-${r.type==='Free'?'practice':'project'}" style="margin-top:8px;">${r.type}</span></div>`).join('');
+}
+
+function renderProjects() {
+  const g = document.getElementById('proj-list');
+  g.innerHTML = projects.map(p => `<div class="project-card"><div class="project-header"><span class="project-name">${p.name}</span><span class="project-week">${p.week}</span></div><p class="project-desc">${p.desc}</p></div>`).join('');
+}
+
+function renderOutcome() {
+  document.getElementById('skills-grid').innerHTML = skills.map(s => `<div class="outcome-item">${s}</div>`).join('');
+  document.getElementById('portfolio-grid').innerHTML = portfolio.map(p => `<div class="outcome-item" style="background:#E6F1FB;color:#0C447C;">${p}</div>`).join('');
+}
+
+const progMap = { w1:25, w2:50, w3:75, w4:100, resources:60, projects:70, outcome:100 };
+
+function showTab(id) {
+  document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  const btns = document.querySelectorAll('.nav-btn');
+  const tabs = ['w1','w2','w3','w4','resources','projects','outcome'];
+  btns[tabs.indexOf(id)].classList.add('active');
+  document.getElementById('prog').style.width = (progMap[id] || 50) + '%';
+}
+
+renderDays('w1', weeks.w1);
+renderDays('w2', weeks.w2);
+renderDays('w3', weeks.w3);
+renderDays('w4', weeks.w4);
+renderResources();
+renderProjects();
+renderOutcome();
+</script>
